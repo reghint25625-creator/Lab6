@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('blog_repair_work', function (Blueprint $table) {
+            $table->foreignId('blog_id')
+                ->constrained('blog', 'blog_id')
+                ->cascadeOnDelete();
+
+            $table->foreignId('work_id')
+                ->constrained('repair_works', 'work_id')
+                ->cascadeOnDelete();
+
+            $table->primary(['blog_id', 'work_id']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('blog_repair_work');
+    }
+};
