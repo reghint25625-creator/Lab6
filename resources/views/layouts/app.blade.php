@@ -74,18 +74,36 @@
 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; display: flex; flex-direction: column; min-height: 100vh;">
 
 <!-- Навигация -->
-<nav style="background-color: #0a3622; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+<nav style="background-color: #0a3622; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
     <div style="color: white; font-size: 18px; font-weight: bold;">
         🚗 <span>Автомайстерня «AutoService»</span>
     </div>
-    <div>
-        <a href="{{ route('home') }}" style="color: white; margin-right: 15px; text-decoration: none; font-weight: bold;">Головна</a>
-        <a href="{{ route('services.index') }}" style="color: white; margin-right: 15px; text-decoration: none;">Послуги</a>
-        <a href="{{ route('blog.index') }}" style="color: white; margin-right: 15px; text-decoration: none; {{ request()->routeIs('blog.*') ? 'text-decoration: underline; font-weight: bold;' : '' }}">Блог / Новини</a>
-        <a href="{{ route('about') }}" style="color: white; margin-right: 15px; text-decoration: none;">Про застосунок</a>
-        <a href="{{ route('contact') }}" style="color: white; margin-right: 15px; text-decoration: none;">Контакти</a>
-        <a href="{{ route('stats.pages') }}" style="color: white; margin-right: 15px; text-decoration: none;">Статистика відвідувань</a>
+
+    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <a href="{{ route('home') }}" style="color: white; text-decoration: none; font-weight: bold;">Головна</a>
+        <a href="{{ route('services.index') }}" style="color: white; text-decoration: none;">Послуги</a>
+        <a href="{{ route('blog.index') }}" style="color: white; text-decoration: none; {{ request()->routeIs('blog.*') ? 'text-decoration: underline; font-weight: bold;' : '' }}">Блог / Новини</a>
+        <a href="{{ route('about') }}" style="color: white; text-decoration: none;">Про застосунок</a>
+        <a href="{{ route('contact') }}" style="color: white; text-decoration: none;">Контакти</a>
+        <a href="{{ route('stats.pages') }}" style="color: white; text-decoration: none;">Статистика відвідувань</a>
         <a href="{{ route('stats.services') }}" style="color: white; text-decoration: none;">Аналітика послуг</a>
+
+        @auth
+            <a href="{{ route('blog.admin') }}" style="color: #90ee90; text-decoration: none; font-weight: bold;">Адміністрування</a>
+            <a href="{{ route('users.index') }}" style="color: #90ee90; text-decoration: none;">Користувачі</a>
+            <a href="{{ route('profile.edit') }}" style="color: #ffffff; text-decoration: none;">Мій профіль</a>
+            <form method="POST" action="{{ route('logout') }}" style="display: inline; margin: 0;">
+                @csrf
+                <button type="submit" style="padding: 5px 10px; border: 1px solid #ffffff; border-radius: 5px; background: transparent; color: #ffffff; cursor: pointer; font-size: 13px;">
+                    Вийти ({{ auth()->user()->name }})
+                </button>
+            </form>
+        @endauth
+
+        @guest
+            <a href="{{ route('login') }}" style="padding: 5px 10px; border: 1px solid #ffffff; border-radius: 5px; color: #ffffff; text-decoration: none; font-size: 13px;">Увійти</a>
+            <a href="{{ route('register') }}" style="padding: 5px 10px; border-radius: 5px; background-color: #1f8135; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: bold;">Реєстрація</a>
+        @endguest
     </div>
 </nav>
 
